@@ -1,0 +1,28 @@
+name: Daily VIX Investment Alert
+
+on:
+  schedule:
+    # 每天上午9:00执行（北京时间=UTC+8，所以写1:00）
+    - cron: '1 1 * * *'
+  workflow_dispatch:  # 允许手动触发（方便测试）
+
+jobs:
+  run-vix-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      
+      - name: Install dependencies
+        run: |
+          pip install yfinance pandas requests
+      
+      - name: Run VIX alert script
+        env:
+          WECHAT_SENDKEY: ${{ secrets.WECHAT_SENDKEY }}
+        run: python vix_alert.py
