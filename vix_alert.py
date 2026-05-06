@@ -40,7 +40,7 @@ def generate_suggestion(vix, peak, is_dropping, drop):
 # 发送到微信（通过Server酱）
 def send_to_wechat(message):
     # 稍后填入你的key
-    server_key = "YOUR_SENDKEY"  # 需要替换
+    server_key = os.environ.get("WECHAT_SENDKEY")  # 需要替换
     url = f"https://sctapi.ftqq.com/{server_key}.send"
     data = {
         "title": "VIX投资建议",
